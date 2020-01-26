@@ -58,6 +58,8 @@ You can spin up a docker-compose cluster, run a battery of MPI4py tests and remo
 
     make main
     cat /etc/hosts | grep mpi_node --color=none | awk '{print $1}' | sort -u > machines && cat ./machines
+    docker exec -it -u mpirun docker---head /bin/sh get_hosts.sh
+    docker exec -it -u mpirun docker---head mpirun -hostfile machines ./helloworld
 
 
 ## Credits
