@@ -71,9 +71,11 @@ ENV TRIGGER 1
 
 ADD helloworldmpich.c ${HOME}/
 RUN chown -R ${USER}:${USER} ${HOME}/helloworldmpich.c
-EXPOSE 22
-CMD ["/usr/sbin/sshd", "-D"]
+
 USER ${USER}
 WORKDIR ${HOME}
 RUN mpicc helloworldmpich.c -o helloworld
-CMD ["/bin/bash"]
+USER ${USER}
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
+
