@@ -22,12 +22,12 @@ rebuild:
 main:
 	# 1 worker node
 	docker-compose scale mpi_head=1 mpi_node=1
-	docker-compose exec --privileged mpi_head mpirun -n 1 python /home/mpirun/mpi4py_benchmarks/all_tests.py
+	docker-compose exec --privileged mpi_head mpirun -n 1 /home/mpirun/helloworld
 	docker-compose down
 
 	# 2 worker nodes
 	docker-compose scale mpi_head=1 mpi_node=2
-	docker-compose exec --privileged mpi_head mpirun -n 2 python /home/mpirun/mpi4py_benchmarks/all_tests.py
+	docker-compose exec --privileged mpi_head mpirun -n 2 python /home/mpirun/helloworld
 	docker-compose down
 
 	# ${NNODES} worker nodes
