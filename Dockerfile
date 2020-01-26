@@ -4,7 +4,7 @@
 FROM ubuntu:18.04
 # FROM phusion/baseimage
 
-MAINTAINER Ole Weidner <ole.weidner@ed.ac.uk>
+MAINTAINER rahul <tankasalarahulgupta@gmail.com>
 
 ENV USER mpirun
 
@@ -15,8 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN apt-get update -y && \
     apt-get install -y --no-install-recommends sudo apt-utils && \
     apt-get install -y --no-install-recommends openssh-server \
-        python-dev python-numpy python-pip python-virtualenv python-scipy \
-        gcc gfortran libopenmpi-dev openmpi-bin openmpi-common openmpi-doc binutils && \
+    gcc gfortran libopenmpi-dev openmpi-bin openmpi-common openmpi-doc binutils && \
     apt-get clean && apt-get purge && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN mkdir /var/run/sshd
@@ -52,11 +51,7 @@ ADD ssh/id_rsa.mpi.pub ${SSHDIR}/authorized_keys
 RUN chmod -R 600 ${SSHDIR}* && \
     chown -R ${USER}:${USER} ${SSHDIR}
 
-RUN pip install --upgrade pip
 
-USER ${USER}
-RUN  pip install --user -U setuptools \
-    && pip install --user mpi4py
 
 # ------------------------------------------------------------
 # Configure OpenMPI
@@ -74,11 +69,11 @@ RUN chown -R ${USER}:${USER} ${HOME}/.openmpi
 
 ENV TRIGGER 1
 
-ADD mpi4py_benchmarks ${HOME}/mpi4py_benchmarks
-ADD helloworldmpich.c /
+ADD helloworldmpich.c ${HOME}/
 RUN chown -R ${USER}:${USER} ${HOME}/helloworldmpich.c
-RUN mpicc helloworldmpich.c -o helloworld
-RUN chown -R ${USER}:${USER} ${HOME}/mpi4py_benchmarks
-
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
+USER ${USER}
+WORKDIR ${HOME}
+RUN mpicc helloworldmpich.c -o helloworld
+CMD ["/bin/bash"]
