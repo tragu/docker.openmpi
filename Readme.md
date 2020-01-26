@@ -57,6 +57,7 @@ Breaking the above command down:
 You can spin up a docker-compose cluster, run a battery of MPI4py tests and remove the cluster using a recipe provided in the included Makefile (handy for development):
 
     make main
+    cat /etc/hosts | grep mpi_node --color=none | awk '{print $1}' | sort -u > machines && cat ./machines
 
 
 ## Credits
