@@ -75,7 +75,7 @@ RUN chown -R ${USER}:${USER} ${HOME}/helloworldmpich.c
 USER ${USER}
 WORKDIR ${HOME}
 RUN mpicc helloworldmpich.c -o helloworld
-USER ${USER}
+USER root
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
