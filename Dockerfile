@@ -71,7 +71,7 @@ ENV TRIGGER 1
 
 ADD helloworldmpich.c ${HOME}/
 ADD get_hosts.sh.txt ${HOME}/
-RUN mv ${HOME}/get_hosts.sh.txt {HOME}/get_hosts.sh
+RUN mv ${HOME}/get_hosts.sh.txt ${HOME}/get_hosts.sh
 RUN chown -R ${USER}:${USER} ${HOME}/helloworldmpich.c
 
 USER ${USER}
